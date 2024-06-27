@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator();
 const FavoriteStackNavigation = (): JSX.Element => {
   return (
   <Stack.Navigator initialRouteName="Favorite">
-    <Stack.Screen name="Favorite" component={Favorite} />
+    <Stack.Screen name="Favorite Screen" component={Favorite} />
     <Stack.Screen name="MovieDetail" component={MovieDetail} />
   </Stack.Navigator>
   );
