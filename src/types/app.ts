@@ -6,7 +6,12 @@ export interface MovieListProps {
 
 export interface Movie {
   backdrop_path: string
-  genres: { id: number; name: string }
+  genres: [
+    {
+      id: number;
+      name: string
+    }
+  ]
   homepage: string
   id: number
   original_title: string
@@ -27,11 +32,13 @@ export interface Movie {
   release_date: Date
   revenue: number
   runtime: number
-  spoken_languages: {
-    english_name: string
-    iso_639_1: string
-    name: string
-  }
+  spoken_languages: [
+    {
+      english_name: string
+      iso_639_1: string
+      name: string
+    }
+  ]
   status: string
   tagline: string
   title: string

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { API_ACCESS_TOKEN } from '@env'
 import MovieList from '../components/movies/MovieList'
 import type { Movie } from '../types/app'
@@ -98,43 +98,95 @@ const MovieDetail = ({ route }: any): JSX.Element => {
     }
   }
 
+  const convertMovieRuntime = (totalMinutes: number): string => {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours}h ${minutes}m`;
+  }
+
+  const convertReleasedDate = (releasedDate: string): number => {
+    const date = new Date(releasedDate)
+    const year = date.getFullYear()
+    return year;
+  }
+
   return (
     <ScrollView>
       {(movie != null) ? (
-        <>
-          <Image
-            resizeMode="cover"
-            style={styles.backdrop}
-            source={{
-              uri: `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`,
-            }}
-          />
-
-          <TouchableOpacity
-            onPress={toggleFavorite}
-          >
-            <FontAwesome
-              name={isFavorite ? "heart" : "heart-o"}
-              size={24}
-              color="red"
+        <View>
+          <View style={styles.imageContainer}>
+            <Image
+              resizeMode="cover"
+              style={styles.image}
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`,
+              }}
             />
-          </TouchableOpacity>
-          
-          <Text style={{ fontSize: 20 }}>title: {movie.title}</Text>
-          <Text style={{ fontSize: 20 }}>vote_average: {movie.vote_average.toFixed(1)}</Text>
-          <Text style={{ fontSize: 20 }}>overview: {movie.overview}</Text>
-          <Text style={{ fontSize: 20 }}>original_language: {movie.original_language}</Text>
-          <Text style={{ fontSize: 20 }}>popularity: {movie.popularity.toFixed(2)}</Text>
-          <Text style={{ fontSize: 20 }}>release_date: {movie.release_date.toString()}</Text>
-          <Text style={{ fontSize: 20 }}>vote_count: {movie.vote_count}</Text>
-
-          <MovieList
-            title='Recommendation'
-            path={`/movie/${movie.id}/recommendations`}
-            coverType='poster'
-            key='{movieList.title}'
-          />
-        </>
+          </View>
+          <View style={styles.container}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>{movie.title}</Text>
+              <TouchableOpacity
+              style={styles.toggleFav}
+                onPress={toggleFavorite}
+                >
+                <FontAwesome
+                  name={isFavorite ? "heart" : "heart-o"}
+                  size={24}
+                  color={isFavorite ? "#de4e4e" : "black"}
+                  />
+              </TouchableOpacity>
+            </View>
+            <View style={{flexDirection: 'row', columnGap: 10, alignItems: 'center', marginBottom: 10}}>
+              <FontAwesome name="star" size={18} color="#FFD700" />
+              <Text style={{color: '#7d8199', fontSize: 16}}>{movie.vote_average.toFixed(2)}</Text>
+              <Text style={{color: '#7d8199', fontSize: 16}}>({movie.vote_count.toLocaleString('en-US')} votes)</Text>
+            </View>
+            <View style={{flexDirection: 'row', columnGap: 10, marginBottom: 10}}>
+              {movie.genres.slice(0, 3).map((genre) => (
+                <Text
+                  key={genre.id}
+                  style={{
+                    color: '#88A4E8',
+                    paddingHorizontal: 12,
+                    paddingVertical: 4,
+                    backgroundColor: '#DBE3FF',
+                    borderRadius: 100,
+                    fontSize: 12
+                  }}
+                >
+                  {genre.name}
+                </Text>
+              ))}
+            </View>
+            <View style={{flexDirection: 'row', columnGap: 30, marginBottom: 20}}>
+              <View style={{flexDirection: 'column', rowGap: 2}}>
+                <Text style={{color: '#7d8199', fontSize: 14}}>Length</Text>
+                <Text style={{color: '#414454', fontSize: 16, fontWeight: '500'}}>{convertMovieRuntime(movie.runtime)}</Text>
+              </View>
+              <View style={{flexDirection: 'column', rowGap: 2}}>
+                <Text style={{color: '#7d8199', fontSize: 14}}>Language</Text>
+                <Text style={{color: '#414454', fontSize: 16, fontWeight: '500'}}>{movie.spoken_languages[0].english_name}</Text>
+              </View>
+              <View style={{flexDirection: 'column', rowGap: 2}}>
+                <Text style={{color: '#7d8199', fontSize: 14}}>Popularity</Text>
+                <Text style={{color: '#414454', fontSize: 16, fontWeight: '500'}}>{movie.popularity.toFixed(2)}</Text>
+              </View>
+              <View style={{flexDirection: 'column', rowGap: 2}}>
+                <Text style={{color: '#7d8199', fontSize: 14}}>Released</Text>
+                <Text style={{color: '#414454', fontSize: 16, fontWeight: '500'}}>{convertReleasedDate(movie.release_date.toString())}</Text>
+              </View>
+            </View>
+            <Text style={{fontSize: 20, fontWeight: '700', color: '#414454', marginBottom: 5}}>Overview</Text>
+            <Text style={{fontSize: 16, color: '#7d8199', lineHeight: 23, letterSpacing: .4, marginBottom: 40}}>{movie.overview}</Text>
+            <MovieList
+              title='Recommendation'
+              path={`/movie/${movie.id}/recommendations`}
+              coverType='poster'
+              key='{movieList.title}'
+            />
+          </View>
+        </View>
       ) : (
         <Text>Loading ...</Text>
       )}
@@ -143,10 +195,39 @@ const MovieDetail = ({ route }: any): JSX.Element => {
 }
 
 const styles = StyleSheet.create({
-  backdrop: {
-    width: 280,
-    height: 160,
+  container: {
+    padding: 20,
   },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
+  image: {
+    width: '100%',
+    height: 250,
+    resizeMode: 'cover',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  titleContainer : {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  title: {
+    color: '#414454',
+    fontSize: 24,
+    fontWeight: '800',
+    flex: .8,
+    letterSpacing: .5,
+  },
+  toggleFav: {
+    flex: .2,
+    alignItems: 'flex-end',
+    marginTop: 5,
+  }
 })
 
 export default MovieDetail
