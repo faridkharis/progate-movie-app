@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { View, FlatList, StyleSheet, } from 'react-native'
 import MovieItem from '../components/movies/MovieItem'
 import type { Movie } from '../types/app'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useFocusEffect } from '@react-navigation/native'
 
 const Favorite = (): JSX.Element => {
   const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([])
 
-  useEffect(() => {
-    void getFavoriteMovies()
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      void getFavoriteMovies()
+    }, [])
+  )
 
   const getFavoriteMovies = async (): Promise<void> => {
     try {
       const favoriteMoviesData = await AsyncStorage.getItem('@FavoriteList')
       if (favoriteMoviesData !== null) {
         const movies: Movie[] = JSON.parse(favoriteMoviesData)
-        movies.map(movie => {console.log(movie.title)})
         setFavoriteMovies(movies)
       }
     } catch (error) {
