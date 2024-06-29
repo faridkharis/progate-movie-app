@@ -6,7 +6,7 @@ import MovieDetail from '../screens/MovieDetail'
 
 const Stack = createNativeStackNavigator()
 
-export default function HomeStackNavigation(): JSX.Element {
+export default function SearchStackNavigation(): JSX.Element {
   return (
     <Stack.Navigator>
       <Stack.Screen

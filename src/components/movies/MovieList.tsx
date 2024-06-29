@@ -35,7 +35,6 @@ const MovieList = ({ title, path, coverType }: MovieListProps): JSX.Element => {
     fetch(url, options)
       .then(async (response) => await response.json())
       .then((response) => {
-        console.log(response)
         setMovies(response.results)
       })
       .catch((errorResponse) => {
