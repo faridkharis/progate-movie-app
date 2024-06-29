@@ -2,18 +2,18 @@ import React, {useState} from 'react'
 import {View, TextInput, StyleSheet, FlatList, TouchableOpacity} from 'react-native'
 import {AntDesign} from '@expo/vector-icons'
 import {API_ACCESS_TOKEN} from '@env'
-import {Movie} from '../../types/app'
+import type {Movie} from '../../types/app'
 import MovieItem from '../movies/MovieItem'
 
 export default function KeywordSearch(): JSX.Element {
   const [keyword, setKeyword] = useState<string>('')
   const [movieSearchResult, setMovieSearchResult] = useState<Movie[]>([])
 
-  const handleOnChangeText = (text: string) => {
+  const handleOnChangeText = (text: string): void => {
     setKeyword(text)
   }
 
-  const handleOnSubmitEditing = async (): Promise<void> => {
+  const searchMovies = async (): Promise<void> => {
     const url = `https://api.themoviedb.org/3/search/movie?query=${keyword}&include_adult=false&language=en-US&page=1`
     const options = {
       method: 'GET',
@@ -26,12 +26,16 @@ export default function KeywordSearch(): JSX.Element {
     fetch(url, options)
       .then(async (response) => await response.json())
       .then((response) => {
-        setMovieSearchResult(response.results)
+        setMovieSearchResult(response.results as Movie[])
       })
       .catch((errorResponse) => {
         console.log(errorResponse)
       })
   }
+
+  const handleOnSubmitEditing = (): void => {
+    void searchMovies();
+  };
 
   return (
     <View style={styles.container}>

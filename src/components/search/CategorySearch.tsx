@@ -34,7 +34,7 @@ export default function CategorySearch(): JSX.Element {
     fetch(url, options)
       .then(async (response) => await response.json())
       .then((response) => {
-        setGenres(response.genres)
+        setGenres(response.genres as Genre[])
       })
       .catch((errorResponse) => {
         console.log(errorResponse)

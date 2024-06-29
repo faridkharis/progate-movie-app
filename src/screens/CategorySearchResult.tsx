@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Text, FlatList, StyleSheet, TouchableOpacity, View} from 'react-native'
 import MovieItem from '../components/movies/MovieItem'
 import {API_ACCESS_TOKEN} from '@env'
+import type { Movie } from '../types/app'
 
 interface Genre {
   id: number
@@ -11,7 +12,7 @@ interface Genre {
 export default function CategoryResults({ route }: any): JSX.Element {
   const {genre} = route.params as {genre: Genre}
 
-  const [movieByGenreList, setMovieByGenreList] = useState([])
+  const [movieByGenreList, setMovieByGenreList] = useState<Movie[]>([])
 
   useEffect(() => {
     getMovieByGenreList()
@@ -30,7 +31,7 @@ export default function CategoryResults({ route }: any): JSX.Element {
     fetch(url, options)
       .then(async (response) => await response.json())
       .then((response) => {
-        setMovieByGenreList(response.results)
+        setMovieByGenreList(response.results as Movie[])
       })
       .catch((errorResponse) => {
         console.log(errorResponse)
