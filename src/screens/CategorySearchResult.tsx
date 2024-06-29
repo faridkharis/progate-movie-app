@@ -8,7 +8,7 @@ interface Genre {
   name: string
 }
 
-export default function CategoryResults({route}): JSX.Element {
+export default function CategoryResults({ route }: any): JSX.Element {
   const {genre} = route.params as {genre: Genre}
 
   const [movieByGenreList, setMovieByGenreList] = useState([])
@@ -17,7 +17,7 @@ export default function CategoryResults({route}): JSX.Element {
     getMovieByGenreList()
   }, [])
 
-  const getMovieByGenreList = () => {
+  const getMovieByGenreList = (): void => {
     const url = `https://api.themoviedb.org/3/discover/movie?page=1&with_genres=${genre.id}`
     const options = {
       method: 'GET',

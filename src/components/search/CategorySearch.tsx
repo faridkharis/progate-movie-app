@@ -18,7 +18,7 @@ export default function CategorySearch(): JSX.Element {
   })
 
   useEffect(() => {
-    getGenres()
+    void getGenres()
   }, [])
 
   const getGenres = async (): Promise<void> => {
@@ -41,7 +41,7 @@ export default function CategorySearch(): JSX.Element {
       })
   }
 
-  const handleGenreSelect = (genre: Genre) => {
+  const handleGenreSelect = (genre: Genre): void => {
     setSelectedGenre(genre)
   }
 
@@ -52,13 +52,13 @@ export default function CategorySearch(): JSX.Element {
           <TouchableOpacity
             key={genre.id}
             style={{...styles.genreItem, backgroundColor: genre.id === selectedGenre?.id ? '#8978A4' : '#C0B4D5'}}
-            onPress={() => handleGenreSelect(genre)}
+            onPress={() => {handleGenreSelect(genre)}}
           >
             <Text style={styles.genreText}>{genre.name}</Text>
           </TouchableOpacity>
         ))}
       </View>
-      <TouchableOpacity style={styles.searchButton} onPress={() => navigation.dispatch(pushAction)}>
+      <TouchableOpacity style={styles.searchButton} onPress={() => {navigation.dispatch(pushAction)}}>
         <Text style={styles.textSearch}>Search</Text>
       </TouchableOpacity>
     </View>
