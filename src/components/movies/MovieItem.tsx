@@ -1,8 +1,7 @@
 import React from 'react'
-import { ImageBackground, Text, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { Image, Text, StyleSheet, View, TouchableOpacity } from 'react-native'
 import { useNavigation, StackActions } from '@react-navigation/native'
 import { FontAwesome } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
 import type { MovieItemProps } from '../../types/app'
 
 const MovieItem = ({ movie, size, coverType }: MovieItemProps): JSX.Element => {
@@ -11,62 +10,61 @@ const MovieItem = ({ movie, size, coverType }: MovieItemProps): JSX.Element => {
   
   return (
     <TouchableOpacity
+      style={{
+        flexDirection: 'column',
+        maxWidth: size.width,
+        marginRight: 16,
+        marginBottom: 16,
+      }}
       onPress={() => {
         navigation.dispatch(pushAction)
       }}
     >
-      <ImageBackground
+      <Image
         resizeMode="cover"
-        style={[size, styles.backgroundImage]}
-        imageStyle={styles.backgroundImageStyle}
+        style={[size, styles.image]}
         source={{
           uri: `https://image.tmdb.org/t/p/w500${
             coverType === 'backdrop' ? movie.backdrop_path : movie.poster_path
           }`,
         }}
-      >
-        <LinearGradient
-          colors={['#00000000', 'rgba(0, 0, 0, 0.7)']}
-          locations={[0.6, 0.8]}
-          style={styles.gradientStyle}
-        >
-          <Text style={styles.movieTitle}>{movie.title}</Text>
-          <View style={styles.ratingContainer}>
-            <FontAwesome name="star" size={16} color="yellow" />
+      />
+      
+      <View style={{}}>
+        <Text numberOfLines={1} style={styles.movieTitle}>{movie.title}</Text>
+        <View style={styles.ratingContainer}>
+          <FontAwesome name="star" size={16} color="#FFD700" />
+          <View style={{flexDirection: 'row', gap: 2}}>
             <Text style={styles.rating}>{movie.vote_average.toFixed(1)}</Text>
+            <Text style={styles.rating}>({movie.vote_count.toLocaleString('en-US')})</Text>
           </View>
-        </LinearGradient>
-      </ImageBackground>
+        </View>
+      </View>
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: {
+  image: {
     marginRight: 4,
-  },
-  backgroundImageStyle: {
-    borderRadius: 8,
+    resizeMode: 'cover',
+    borderRadius: 10,
   },
   movieTitle: {
-    color: 'white',
-  },
-  gradientStyle: {
-    padding: 8,
-    height: '100%',
-    width: '100%',
-    borderRadius: 8,
-    display: 'flex',
-    justifyContent: 'flex-end',
+    color: '#414454',
+    fontWeight: '700',
+    fontSize: 18,
+    letterSpacing: .3,
+    marginTop: 5,
   },
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 2,
+    gap: 5,
   },
   rating: {
-    color: 'yellow',
-    fontWeight: '700',
+    color: '#7d8199',
+    fontWeight: '400',
   },
 })
 

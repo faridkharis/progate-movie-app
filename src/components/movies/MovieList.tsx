@@ -10,8 +10,8 @@ const coverImageSize = {
     height: 160,
   },
   poster: {
-    width: 100,
-    height: 160,
+    width: 120,
+    height: 180,
   },
 }
 
@@ -35,6 +35,7 @@ const MovieList = ({ title, path, coverType }: MovieListProps): JSX.Element => {
     fetch(url, options)
       .then(async (response) => await response.json())
       .then((response) => {
+        console.log(response)
         setMovies(response.results)
       })
       .catch((errorResponse) => {
@@ -45,17 +46,9 @@ const MovieList = ({ title, path, coverType }: MovieListProps): JSX.Element => {
   return (
     <View>
       <View style={styles.header}>
-        <View style={styles.purpleLabel}></View>
         <Text style={styles.title}>{title}</Text>
       </View>
       <FlatList
-        style={{
-          ...styles.movieList,
-          maxHeight: coverImageSize[coverType].height,
-        }}
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        data={movies}
         renderItem={({ item }) => (
           <MovieItem
             movie={item}
@@ -63,7 +56,15 @@ const MovieList = ({ title, path, coverType }: MovieListProps): JSX.Element => {
             coverType={coverType}
           />
         )}
+        data={movies}
         keyExtractor={(item) => item.id.toString()}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{
+          ...styles.movieList,
+          maxHeight: coverImageSize[coverType].height + 60,
+        }}
+        
       />
     </View>
   )
@@ -71,24 +72,16 @@ const MovieList = ({ title, path, coverType }: MovieListProps): JSX.Element => {
 
 const styles = StyleSheet.create({
   header: {
-    marginLeft: 6,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },
-  purpleLabel: {
-    width: 20,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#8978A4',
-    marginRight: 12,
-  },
   title: {
     fontSize: 20,
-    fontWeight: '900',
+    fontWeight: '700',
+    color: '#414454',
   },
   movieList: {
-    paddingLeft: 4,
     marginTop: 8,
   },
 })
