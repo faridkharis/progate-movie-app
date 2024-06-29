@@ -13,7 +13,7 @@ const MovieDetail = ({ route }: any): JSX.Element => {
 
   useEffect(() => {
     getMovie()
-    void checkIsFavorite(id).then(setIsFavorite)
+    void checkIsFavorite(id as number).then(setIsFavorite)
   }, [id])
 
   const getMovie = (): void => {
@@ -29,7 +29,7 @@ const MovieDetail = ({ route }: any): JSX.Element => {
     fetch(url, options)
     .then(async (response) => await response.json())
     .then((response) => {
-      setMovie(response)
+      setMovie(response as Movie)
     })
     .catch((errorResponse) => {
       console.log(errorResponse)
