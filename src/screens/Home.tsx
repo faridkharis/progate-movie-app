@@ -5,7 +5,7 @@ import MovieList from '../components/movies/MovieList'
 
 const movieLists: MovieListProps[] = [
   {
-    title: 'Now Playing in Theater',
+    title: 'Now Showing',
     path: 'movie/now_playing?language=en-US&page=1',
     coverType: 'backdrop',
   },
@@ -46,7 +46,7 @@ const Home = (): JSX.Element => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: StatusBar.currentHeight ?? 32,
+    padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
     rowGap: 16,
