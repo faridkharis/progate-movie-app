@@ -6,8 +6,8 @@ import MovieItem from './MovieItem'
 
 const coverImageSize = {
   backdrop: {
-    width: 280,
-    height: 160,
+    width: 320,
+    height: 200,
   },
   poster: {
     width: 120,
@@ -59,11 +59,15 @@ const MovieList = ({ title, path, coverType }: MovieListProps): JSX.Element => {
         keyExtractor={(item) => item.id.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{
-          ...styles.movieList,
-          maxHeight: coverImageSize[coverType].height + 60,
-        }}
-        
+        style={
+          coverType === 'backdrop' ? {
+            ...styles.movieList,
+            maxHeight: coverImageSize[coverType].height,
+          } : {
+            ...styles.movieList,
+            maxHeight: coverImageSize[coverType].height + 50,
+          }
+        }
       />
     </View>
   )
@@ -79,6 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     color: '#414454',
+    marginBottom: 5,
   },
   movieList: {
     marginTop: 8,
