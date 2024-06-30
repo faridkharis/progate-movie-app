@@ -17,6 +17,7 @@ const BottomTabNavigation = (): JSX.Element => (
           <Feather name="home" size={28} color={color} />
         ),
         headerShown: false,
+        tabBarShowLabel: false
       }}
     />
     <Tab.Screen
@@ -27,6 +28,7 @@ const BottomTabNavigation = (): JSX.Element => (
           <Feather name="search" size={28} color={color} />
         ),
         headerShown: false,
+        tabBarShowLabel: false
       }}
     />
     <Tab.Screen
@@ -37,6 +39,7 @@ const BottomTabNavigation = (): JSX.Element => (
           <Feather name="heart" size={28} color={color} />
         ),
         headerShown: false,
+        tabBarShowLabel: false
       }}
     />
   </Tab.Navigator>
