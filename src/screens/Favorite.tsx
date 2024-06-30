@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react'
-import { View, FlatList, StyleSheet, } from 'react-native'
-import MovieItem from '../components/movies/MovieItem'
+import { View, FlatList, StyleSheet, Text } from 'react-native'
 import type { Movie } from '../types/app'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect } from '@react-navigation/native'
+import FavoriteMovieItem from '../components/movies/FavoriteMovieItem'
 
 const Favorite = (): JSX.Element => {
   const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([])
@@ -28,17 +28,17 @@ const Favorite = (): JSX.Element => {
   
   return (
       <View style={styles.container} >
-
+        <Text style={styles.title}>Favorite Movies</Text>
         <FlatList
         data={favoriteMovies}
           renderItem={({ item }) => (
-            <MovieItem
+            <FavoriteMovieItem
               movie={item}
               size={styles.poster}
-              coverType={'backdrop'}
+              coverType={'poster'}
             />
           )}
-          numColumns={3}
+          showsVerticalScrollIndicator={false}
           keyExtractor={(item) => item.id.toString()}
         />
         
@@ -53,6 +53,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#414454',
+    marginBottom: 20,
   },
   poster: {
     width: 100,
