@@ -7,8 +7,6 @@ This repository contains the final project for the Digitalent Scholarship: Mobil
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
 ![](doc/shot01.png?raw=true) ![](doc/shot02.png?raw=true) ![](doc/shot03.png?raw=true)
 ![](doc/shot04.png?raw=true) ![](doc/shot05.png?raw=true) ![](doc/shot06.png?raw=true)
 
