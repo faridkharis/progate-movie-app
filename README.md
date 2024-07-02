@@ -7,8 +7,8 @@ This repository contains the final project for the Digitalent Scholarship: Mobil
 
 ## Screenshots
 
-![](doc/shot01.png?raw=true) ![](doc/shot02.png?raw=true) ![](doc/shot03.png?raw=true)
-![](doc/shot04.png?raw=true) ![](doc/shot05.png?raw=true) ![](doc/shot06.png?raw=true)
+![](doc/shot_01.png?raw=true) ![](doc/shot_02.png?raw=true) ![](doc/shot_03.png?raw=true)
+![](doc/shot_04.png?raw=true) ![](doc/shot_05.png?raw=true) ![](doc/shot_06.png?raw=true)
 
 
 
